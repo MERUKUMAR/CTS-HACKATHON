@@ -1,56 +1,60 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Healthcare Fraud Detection</title>
-    <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Healthcare Fraud Detection</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+  <!-- Chart.js CDN -->
+  <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
 </head>
 <body>
-    <div class="container">
-        <header>
-            <h1>Healthcare Fraud Detection Model</h1>
-            <p>Upload the 8 required CSV files to train the model and generate predictions.</p>
-        </header>
+  <div class="container">
+    <header>
+      <h1>Healthcare Fraud Detection Model</h1>
+      <p>Upload the 8 required CSV files to train the model and generate predictions.</p>
+    </header>
 
-        <form id="upload-form">
-            <div class="file-upload-grid">
-                <div class="file-input-container"><label for="trainBeneficiary">Train Beneficiary Data</label><input type="file" id="trainBeneficiary" name="trainBeneficiary" accept=".csv" required></div>
-                <div class="file-input-container"><label for="trainInpatient">Train Inpatient Data</label><input type="file" id="trainInpatient" name="trainInpatient" accept=".csv" required></div>
-                <div class="file-input-container"><label for="trainOutpatient">Train Outpatient Data</label><input type="file" id="trainOutpatient" name="trainOutpatient" accept=".csv" required></div>
-                <div class="file-input-container"><label for="trainLabels">Train Fraud Labels</label><input type="file" id="trainLabels" name="trainLabels" accept=".csv" required></div>
-                <div class="file-input-container"><label for="testBeneficiary">Test Beneficiary Data</label><input type="file" id="testBeneficiary" name="testBeneficiary" accept=".csv" required></div>
-                <div class="file-input-container"><label for="testInpatient">Test Inpatient Data</label><input type="file" id="testInpatient" name="testInpatient" accept=".csv" required></div>
-                <div class="file-input-container"><label for="testOutpatient">Test Outpatient Data</label><input type="file" id="testOutpatient" name="testOutpatient" accept=".csv" required></div>
-                <div class="file-input-container"><label for="testProviders">Test Providers List</label><input type="file" id="testProviders" name="testProviders" accept=".csv" required></div>
-            </div>
-            <button type="submit" id="run-analysis-btn">Start Analysis</button>
-        </form>
+    <form id="upload-form">
+      <div class="file-upload-grid">
+        <div class="file-input-container"><label>Train Beneficiary Data</label><input type="file" name="trainBeneficiary" required></div>
+        <div class="file-input-container"><label>Train Inpatient Data</label><input type="file" name="trainInpatient" required></div>
+        <div class="file-input-container"><label>Train Outpatient Data</label><input type="file" name="trainOutpatient" required></div>
+        <div class="file-input-container"><label>Train Fraud Labels</label><input type="file" name="trainLabels" required></div>
+        <div class="file-input-container"><label>Test Beneficiary Data</label><input type="file" name="testBeneficiary" required></div>
+        <div class="file-input-container"><label>Test Inpatient Data</label><input type="file" name="testInpatient" required></div>
+        <div class="file-input-container"><label>Test Outpatient Data</label><input type="file" name="testOutpatient" required></div>
+        <div class="file-input-container"><label>Test Providers List</label><input type="file" name="testProviders" required></div>
+      </div>
+      <button type="submit" id="run-analysis-btn">Start Analysis</button>
+    </form>
 
-        <div id="status-container" class="hidden">
-            <div class="loader"></div>
-            <p id="status-text">Uploading files and running analysis...</p>
-        </div>
-
-        <div id="results-container" class="hidden">
-            <h2>Analysis Complete</h2>
-            <div class="results-grid">
-                <div class="chart-container">
-                    <h3>Prediction Summary</h3>
-                    <img id="fraud-pie-chart" src="" alt="Fraud Distribution Pie Chart">
-                </div>
-                <div class="chart-container">
-                    <h3>Key Fraud Indicators</h3>
-                    <img id="importance-chart" src="" alt="Feature Importance Chart">
-                </div>
-            </div>
-            <div class="table-container">
-                <h3>Prediction Results Preview</h3>
-                <a id="download-btn" class="hidden">Download Full Predictions CSV</a>
-                <div id="results-table"></div>
-            </div>
-        </div>
+    <div id="status-container" class="hidden">
+      <div class="loader"></div>
+      <p id="status-text">Uploading files and running analysis...</p>
     </div>
-    <script src="{{ url_for('static', filename='script.js') }}"></script>
+
+    <div id="results-container" class="hidden">
+      <h2>Analysis Complete</h2>
+      <div class="results-grid">
+        <div class="chart-container">
+          <h3>Prediction Summary</h3>
+          <canvas id="fraud-pie-chart"></canvas>
+        </div>
+        <div class="chart-container">
+          <h3>Key Fraud Indicators</h3>
+          <canvas id="importance-chart"></canvas>
+        </div>
+      </div>
+
+      <div class="table-container">
+        <h3>Prediction Results Preview</h3>
+        <a id="download-btn" class="hidden">Download Full Predictions CSV</a>
+        <div id="results-table"></div>
+      </div>
+    </div>
+  </div>
+
+  <script src="{{ url_for('static', filename='script.js') }}"></script>
 </body>
 </html>
